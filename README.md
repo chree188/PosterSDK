@@ -9,7 +9,7 @@
 git clone github.com/chree188/PosterSDK
 go run main.go
 ```
-![海报](build/poster_br3km9ro6hip8c5okrg0.png)
+![海报](build/poster_c8bi4cjq2lq1h80g85bg.png)
 
 
 
@@ -127,8 +127,3 @@ import (
 * endHandler 要放到链式调用最后
 * 图片需要是png格式
 
-## 打赏
-
-如果你觉得使用这个组件节约了你的时间，请扫码打赏^_^
-
-![打赏](assets/reward.jpeg)
