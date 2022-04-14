@@ -15,15 +15,18 @@ import (
 
 	"github.com/chree188/PosterSDK/circlemask"
 	"github.com/chree188/PosterSDK/core"
+	"github.com/nfnt/resize"
 )
 
 // ImageCircleLocalHandler 根据Path路径设置圆形图片
 type ImageCircleLocalHandler struct {
 	// 合成复用Next
 	Next
-	X    int
-	Y    int
-	Path string //./images/xx.png
+	X     int
+	Y     int
+	Width uint
+	Hight uint
+	Path  string //./images/xx.png
 }
 
 // Do 地址逻辑
@@ -39,6 +42,11 @@ func (h *ImageCircleLocalHandler) Do(c *Context) (err error) {
 	if err != nil {
 		fmt.Errorf("SetRemoteImage image.Decode err：%v", err)
 	}
+	
+	if h.Width > 0 && h.Hight > 0 {
+		srcImage = resize.Resize(h.Width, h.Hight, srcImage, resize.Lanczos3)
+	}
+	
 	// 算出图片的宽度和高试
 	width := srcImage.Bounds().Max.X - srcImage.Bounds().Min.X
 	hight := srcImage.Bounds().Max.Y - srcImage.Bounds().Min.Y
