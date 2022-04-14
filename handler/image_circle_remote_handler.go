@@ -14,6 +14,7 @@ import (
 
 	"github.com/chree188/PosterSDK/circlemask"
 	"github.com/chree188/PosterSDK/core"
+	"github.com/nfnt/resize"
 )
 
 // ImageCircleRemoteHandler 根据URL地址设置圆形图片
@@ -22,6 +23,8 @@ type ImageCircleRemoteHandler struct {
 	Next
 	X   int
 	Y   int
+	Width uint
+	Hight uint
 	URL string //http://xxx.png
 }
 
@@ -36,6 +39,11 @@ func (h *ImageCircleRemoteHandler) Do(c *Context) (err error) {
 	if err != nil {
 		fmt.Errorf("SetRemoteImage image.Decode err：%v", err)
 	}
+	
+	if h.Width > 0 && h.Hight > 0 {
+		srcImage = resize.Resize(h.Width, h.Hight, srcImage, resize.Lanczos3)
+	}
+	
 	// 算出图片的宽度和高试
 	width := srcImage.Bounds().Max.X - srcImage.Bounds().Min.X
 	hight := srcImage.Bounds().Max.Y - srcImage.Bounds().Min.Y
