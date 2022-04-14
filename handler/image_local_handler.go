@@ -13,7 +13,8 @@ import (
 	"image"
 	"image/png"
 	"os"
-
+	
+	"github.com/nfnt/resize"
 	"github.com/chree188/PosterSDK/core"
 )
 
@@ -23,6 +24,8 @@ type ImageLocalHandler struct {
 	Next
 	X    int
 	Y    int
+	Width uint
+	Hight uint
 	Path string //xxx/xx.png
 }
 
@@ -37,6 +40,11 @@ func (h *ImageLocalHandler) Do(c *Context) (err error) {
 	if err != nil {
 		fmt.Errorf("png.Decode err：%v", err)
 	}
+	
+	if h.Width > 0 && h.Hight > 0 {
+		srcImage = resize.Resize(h.Width, h.Hight, srcImage, resize.Lanczos3)
+	}
+	
 	srcPoint := image.Point{
 		X: h.X,
 		Y: h.Y,
